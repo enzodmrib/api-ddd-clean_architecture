@@ -1,0 +1,30 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 14,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+      "no-useless-constructor": "off",
+      "no-unused-vars": "warn",
+      "import/prefer-default-export": "off",
+      "no-empty-function": "off",
+      "import/no-unresolved": "off",
+      "import/extensions": "off",
+      "import/no-extraneous-dependencies": "off",
+      "no-await-in-loop": "off",
+      "camelcase": "off",
+      "no-plusplus": "off",
+      "class-methods-use-this": "off"
+    }
+}
