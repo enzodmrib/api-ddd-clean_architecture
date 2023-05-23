@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { makeCreateGymUseCase } from '@/use-cases/factories/make-create-gym-use-case';
 import { makeCheckInUseCase } from '@/use-cases/factories/make-check-in-use-case';
 import { makeValidateCheckInUseCase } from '@/use-cases/factories/make-validate-check-in-use-case';
+import { ValidateCheckInDTO } from '@/DTOs/check-ins/validate-check-in-dto';
 
 export async function validate(request: FastifyRequest, reply: FastifyReply) {
   const validateCheckInParamsSchema = z.object({
@@ -20,9 +21,9 @@ export async function validate(request: FastifyRequest, reply: FastifyReply) {
    */
   const validateCheckInUseCase = makeValidateCheckInUseCase(); // register use case factory
 
-  await validateCheckInUseCase.execute({
-    checkInId
-  });
+  const validateCheckInDTO = new ValidateCheckInDTO(checkInId)
+
+  await validateCheckInUseCase.execute(validateCheckInDTO);
 
   return reply.status(204).send();
 }

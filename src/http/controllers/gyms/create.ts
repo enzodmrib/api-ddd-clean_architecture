@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { z } from 'zod';
 import { makeCreateGymUseCase } from '@/use-cases/factories/make-create-gym-use-case';
+import { CreateGymDTO } from '@/DTOs/gyms/create-gym-dto';
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createGymBodySchema = z.object({
@@ -26,13 +27,9 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
    */
   const createGymUseCase = makeCreateGymUseCase(); // register use case factory
 
-  await createGymUseCase.execute({
-    title,
-    description,
-    phone,
-    latitude,
-    longitude
-  });
+  const createGymDTO = new CreateGymDTO(title, description, phone, latitude, longitude);
+
+  await createGymUseCase.execute(createGymDTO);
 
   return reply.status(201).send();
 }

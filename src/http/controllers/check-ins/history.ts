@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { z } from 'zod';
 import { makeFetchUserCheckInsHistoryUseCase } from '@/use-cases/factories/make-fetch-user-check-ins-history-use-case.ts';
+import { HistoryDTO } from '@/DTOs/check-ins/history-dto';
 
 export async function history(request: FastifyRequest, reply: FastifyReply) {
   const checkInHistoryQuerySchema = z.object({
@@ -18,10 +19,9 @@ export async function history(request: FastifyRequest, reply: FastifyReply) {
    */
   const fetchUserCheckInsHistoryUseCase = makeFetchUserCheckInsHistoryUseCase(); // register use case factory
 
-  const { checkIns } = await fetchUserCheckInsHistoryUseCase.execute({
-    page,
-    userId: request.user.sub
-  });
+  const historyDTO = new HistoryDTO(request.user.sub, page);
+
+  const { checkIns } = await fetchUserCheckInsHistoryUseCase.execute(historyDTO);
 
   return reply.status(200).send({
     checkIns

@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { z } from 'zod';
-import { makeFetchUserCheckInsHistoryUseCase } from '@/use-cases/factories/make-fetch-user-check-ins-history-use-case.ts';
 import { makeGetUserMetricsUseCase } from '@/use-cases/factories/make-get-user-metrics-use-case';
+import { GetUserMetricsDTO } from '@/DTOs/check-ins/get-user-metrics-dto';
 
 export async function metrics(request: FastifyRequest, reply: FastifyReply) {
   /**
@@ -13,9 +13,9 @@ export async function metrics(request: FastifyRequest, reply: FastifyReply) {
    */
   const getUserMetricsUseCase = makeGetUserMetricsUseCase(); // register use case factory
 
-  const { checkInsCount } = await getUserMetricsUseCase.execute({
-    userId: request.user.sub
-  });
+  const getUserMetricsDTO = new GetUserMetricsDTO(request.user.sub)
+
+  const { checkInsCount } = await getUserMetricsUseCase.execute(getUserMetricsDTO);
 
   return reply.status(200).send({
     checkInsCount

@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { z } from 'zod';
 import { makeSearchGymsUseCase } from '@/use-cases/factories/make-search-gyms-use-case';
+import { SearchGymsDTO } from '@/DTOs/gyms/search-gyms-dto';
 
 export async function search(request: FastifyRequest, reply: FastifyReply) {
   const searchGymsQuerySchema = z.object({
@@ -19,10 +20,9 @@ export async function search(request: FastifyRequest, reply: FastifyReply) {
    */
   const searchGymsUseCase = makeSearchGymsUseCase(); // register use case factory
 
-  const { gyms } = await searchGymsUseCase.execute({
-    query: q,
-    page
-  });
+  const searchGymsDTO = new SearchGymsDTO(q, page)
+
+  const { gyms } = await searchGymsUseCase.execute(searchGymsDTO);
 
   return reply.status(200).send({
     gyms

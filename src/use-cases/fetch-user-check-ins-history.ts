@@ -1,10 +1,6 @@
 import { CheckIn } from '@prisma/client';
 import { CheckInsRepository } from '@/repositories/check-ins-repository';
-
-interface FetchUserCheckInsHistoryUseCaseRequest {
-  userId: string
-  page: number
-}
+import { HistoryDTO } from '@/DTOs/check-ins/history-dto';
 
 interface FetchUserCheckInsHistoryUseCaseResponse {
   checkIns: CheckIn[]
@@ -16,7 +12,7 @@ export class FetchUserCheckInsHistoryUseCase {
   async execute({
     userId,
     page,
-  }: FetchUserCheckInsHistoryUseCaseRequest): Promise<FetchUserCheckInsHistoryUseCaseResponse> {
+  }: HistoryDTO): Promise<FetchUserCheckInsHistoryUseCaseResponse> {
     const checkIns = await this.checkInsRepository.findManyByUserId(
       userId,
       page,

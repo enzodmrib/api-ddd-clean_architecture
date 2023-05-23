@@ -7,10 +7,8 @@ import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coor
 import { MaxDistanceError } from './errors/max-distance-error';
 import { MaxNumberOfCheckInsError } from './errors/max-number-of-check-ins-error';
 import { LateCheckInValidationError } from './errors/late-check-in-validation-error';
+import { ValidateCheckInDTO } from '@/DTOs/check-ins/validate-check-in-dto';
 
-interface ValidateCheckInUseCaseRequest {
-  checkInId: string
-}
 
 interface ValidateCheckInUseCaseResponse {
   checkIn: CheckIn
@@ -23,7 +21,7 @@ export class ValidateCheckInUseCase {
 
   async execute({
     checkInId,
-  }: ValidateCheckInUseCaseRequest): Promise<ValidateCheckInUseCaseResponse> {
+  }: ValidateCheckInDTO): Promise<ValidateCheckInUseCaseResponse> {
     const checkIn = await this.checkInsRepository.findById(checkInId);
 
     if (!checkIn) {

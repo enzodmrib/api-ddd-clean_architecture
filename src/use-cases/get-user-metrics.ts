@@ -1,8 +1,5 @@
+import { GetUserMetricsDTO } from '@/DTOs/check-ins/get-user-metrics-dto';
 import { CheckInsRepository } from '@/repositories/check-ins-repository';
-
-interface GetUserMetricsUseCaseRequest {
-  userId: string
-}
 
 interface GetUserMetricsUseCaseResponse {
   checkInsCount: number
@@ -13,7 +10,7 @@ export class GetUserMetricsUseCase {
 
   async execute({
     userId,
-  }: GetUserMetricsUseCaseRequest): Promise<GetUserMetricsUseCaseResponse> {
+  }: GetUserMetricsDTO): Promise<GetUserMetricsUseCaseResponse> {
     const checkInsCount = await this.checkInsRepository.countByUserId(userId);
 
     return {
