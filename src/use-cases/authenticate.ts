@@ -3,6 +3,7 @@ import { User } from '@prisma/client';
 import { UsersRepository } from '@/repositories/users-repository';
 import { InvalidCredentialsError } from './errors/invalid-credentials-error';
 import { AuthenticateUserDTO } from '@/DTOs/users/authenticate-user-dto';
+import { Email } from '@/value-objects/email';
 
 interface AuthenticateUseCaseResponse {
   user: User
@@ -15,7 +16,9 @@ export class AuthenticateUseCase {
     email,
     password,
   }: AuthenticateUserDTO): Promise<AuthenticateUseCaseResponse> {
-    const user = await this.usersRepository.findByEmail(email);
+    const emailValueObject = new Email(email)
+
+    const user = await this.usersRepository.findByEmail(emailValueObject.value);
 
     if (!user) {
       throw new InvalidCredentialsError();
