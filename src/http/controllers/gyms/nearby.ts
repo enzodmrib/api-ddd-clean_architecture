@@ -1,5 +1,5 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
 import { z } from 'zod';
+import { FastifyRequest, FastifyReply } from 'fastify';
 import { makeFetchNearbyGymsUseCase } from '@/use-cases/factories/make-fetch-nearby-gyms-use-case';
 import { FetchNearbyGymsDTO } from '@/DTOs/gyms/fetch-nearby-gyms-dto';
 
