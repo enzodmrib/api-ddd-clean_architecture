@@ -6,6 +6,9 @@ export default defineConfig({
   test: {
     environmentMatchGlobs: [
       ['src/http/controllers/**', 'prisma']
-    ]
+    ],
+    coverage: {
+      reporter: ["text", "html"]
+    }
   }
 });

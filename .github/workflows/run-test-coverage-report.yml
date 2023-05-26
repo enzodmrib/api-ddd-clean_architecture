@@ -27,7 +27,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run test:ui
+      - run: npm run test:coverage
         env: 
           JWT_SECRET: testing
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/apidddca?schema=public"
