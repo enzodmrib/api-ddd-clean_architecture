@@ -1,0 +1,33 @@
+name: Run Test Coverage Report
+
+on: [pull_request]
+
+jobs:
+  run-test-coverage-report:
+    name: Run Test Coverage Report
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: bitnami/postgresql
+        ports:
+          - 5432:5432
+        env:
+          POSTGRESQL_USERNAME: docker
+          POSTGRESQL_PASSWORD: docker
+          POSTGRESQL_DATABASE: apidddca
+
+    steps: 
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run test:ui
+        env: 
+          JWT_SECRET: testing
+          DATABASE_URL: "postgresql://docker:docker@localhost:5432/apidddca?schema=public"
