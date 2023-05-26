@@ -1,6 +1,6 @@
 name: Run Test Coverage Report
 
-on: [pull_request]
+on: [push]
 
 jobs:
   run-test-coverage-report:
