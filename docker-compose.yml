@@ -1,6 +1,10 @@
 version: '3'
 
 services:
+  api-ddd-ca:
+    image: enzor/api-ddd-clean_architecture
+    ports: 
+      - 3333:3333
   api-ddd-ca-pg:
     image: bitnami/postgresql
     ports:
